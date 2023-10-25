@@ -2,8 +2,7 @@
 const nextConfig = {
   output: 'export',
   assetPrefix: './',
-  basePath: "/sign-in",
-  distDir: 'dists',
+  distDir: 'dist',
   images: {
     unoptimized: true
   },
@@ -13,6 +12,21 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  reactStrictMode: true,
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/': { page: '/sign-in' },
+      '/sign-in': { page: '/sign-in' },
+      '/sign-up': { page: '/sign-up' },
+      '/expense-bill': { page: '/expense-bill' },
+      // '/expenseBill/edit': { page: '/expenseBill/edit' },
+      // '/expenseBill/create': { page: '/expenseBill/create' },
+      '/epproval-records': { page: '/epproval-records' },
+    }
+  }, 
 }
 
 module.exports = nextConfig

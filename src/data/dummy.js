@@ -484,7 +484,7 @@ export const links = [
     title: 'Pages',
     links: [
       {
-        name: 'expenseBill',
+        name: 'expense-bill',
         description: '项目费用单',
         icon: <ScrollText size={16} />,
       },

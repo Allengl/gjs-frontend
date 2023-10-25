@@ -1218,4 +1218,3 @@ export const ProjectFeeService = {
       return Promise.resolve(this.getProductsWithOrdersData());
   }
 };
-
