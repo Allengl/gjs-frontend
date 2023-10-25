@@ -3,22 +3,24 @@ import type { AppProps } from 'next/app'
 import PagesLayout from '@/layouts/PagesLayout';
 import SignInPage from './sign-in';
 import SignUpPage from './sign-up';
-import { RouterProvider  } from 'react-router-dom';
-import { router } from '@/router/routes'
+import Provider from '@/components/Provider';
 
 
 
 export default function App({ Component, pageProps }: AppProps) {
   if (Component === SignInPage || Component === SignUpPage) {
     // 如果当前页面是登录页面，不使用布局
-    return <Component {...pageProps} />;
+    return <Provider>
+      <Component {...pageProps} />;
+    </Provider>
   }
 
   return (
+    <Provider>
       <PagesLayout>
-            <RouterProvider router={router} />
         <Component {...pageProps} />
       </PagesLayout>
+    </Provider>
   );
 }
 
