@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  assetPrefix: 'http://localhost:5500/',
-  distDir: 'dist',
+  assetPrefix: 'http://localhost:3000/',
+  distDir: 'dists',
   images: {
     unoptimized: true
   },
@@ -23,9 +23,9 @@ const nextConfig = {
       '/sign-in': { page: '/sign-in' },
       '/sign-up': { page: '/sign-up' },
       '/expense-bill': { page: '/expense-bill' },
-      // '/expenseBill/edit': { page: '/expenseBill/edit' },
-      // '/expenseBill/create': { page: '/expenseBill/create' },
-      '/epproval-records': { page: '/epproval-records' },
+      '/expense-bill/create': { page: '/expense-bill/create' },
+      '/expenseBill/edit': { page: '/expenseBill/edit' },
+      '/approval-records': { page: '/approval-records' },
     }
   }, 
 }

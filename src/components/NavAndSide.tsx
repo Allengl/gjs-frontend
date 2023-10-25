@@ -16,7 +16,6 @@ const NavAndSide: FC<NavAndSideProps> = ({ children }) => {
       <div className={`fixed top-0 left-0 h-full ${activeMenu ? 'w-72' : 'w-0'} transition-all duration-200 dark:bg-secondary-dark-bg bg-white`}>
         <Sidebar />
       </div>
-
       <div
         className={
           activeMenu

@@ -9,7 +9,7 @@ import { BiLogoFirebase } from 'react-icons/bi';
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu, screenSize } = useStateContext();
-  const [activeLinkName, setActiveLinkName] = useState<string>('expenseBill');
+  const [activeLinkName, setActiveLinkName] = useState<string>('expense-bill');
 
 
   const handleCloseSideBar = () => {
