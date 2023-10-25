@@ -1,6 +1,5 @@
 import User from "@/components/User";
 import { buttonVariants } from "@/components/ui/button";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 const Home = async() => {
