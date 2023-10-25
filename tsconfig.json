@@ -49,7 +49,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/(page)/(pages)/epprovalRecords/tables/PlusIcon.jsx",
-    "dist/types/**/*.ts"
+    "dist/types/**/*.ts",
+    "dists/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

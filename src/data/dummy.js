@@ -488,11 +488,11 @@ export const links = [
         description: '项目费用单',
         icon: <ScrollText size={16} />,
       },
-      {
-        name: 'epprovalRecords',
-        description: '审批记录',
-        icon: <IoMdContacts />,
-      },
+      // {
+      //   name: 'epprovalRecords',
+      //   description: '审批记录',
+      //   icon: <IoMdContacts />,
+      // },
       // {
       //   name: 'customers',
       //   icon: <RiContactsLine />,

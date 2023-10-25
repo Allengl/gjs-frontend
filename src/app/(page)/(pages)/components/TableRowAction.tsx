@@ -27,10 +27,10 @@ export function TableRowActions({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <Link href={`/expenseBill/${row.id}`} >
+        <Link href={`/expenseBill/edit`} >
           <DropdownMenuItem>编辑</DropdownMenuItem>
         </Link>
-        <Link href={`/epprovalRecords/${row.id}`} >
+        <Link href={`/epprovalRecords`} >
           <DropdownMenuItem>审批记录</DropdownMenuItem>
         </Link>
         <DropdownMenuItem>删除</DropdownMenuItem>

@@ -6,7 +6,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ProjectFeeService } from '@/service/ProjectFeeService';
 import { Toast } from 'primereact/toast';
-import { Button } from 'primereact/button';
+import { Button } from "@/components/ui/button"
 import { FileUpload } from 'primereact/fileupload';
 import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
@@ -21,6 +21,7 @@ import ProjectFeeForm from './ProjectCostForm';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { TableRowActions } from './TableRowAction';
+import { AlertTriangle, Check, Plus, Search, Trash, Trash2, X } from 'lucide-react';
 
 
 interface Product {
@@ -59,11 +60,11 @@ export default function ProjectCostTable(props) {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
   };
 
-  const openNew = () => {
-    setProduct(emptyProduct);
-    setSubmitted(false);
-    setProductDialog(true);
-  };
+  // const openNew = () => {
+  //   setProduct(emptyProduct);
+  //   setSubmitted(false);
+  //   setProductDialog(true);
+  // };
 
   const hideDialog = () => {
     setSubmitted(false);
@@ -107,7 +108,7 @@ export default function ProjectCostTable(props) {
     setProductDialog(true);
   };
 
-  const confirmDeleteProduct = (product: Product) => {
+  const 确认DeleteProduct = (product: Product) => {
     setProduct(product);
     setDeleteProductDialog(true);
   };
@@ -149,7 +150,7 @@ export default function ProjectCostTable(props) {
     dt.current?.exportCSV();
   };
 
-  const confirmDeleteSelected = () => {
+  const ConfirmDeleteSelected = () => {
     setDeleteProductsDialog(true);
   };
 
@@ -191,8 +192,17 @@ export default function ProjectCostTable(props) {
   const leftToolbarTemplate = () => {
     return (
       <div className="flex ml-4 flex-wrap gap-5">
-        <Button label="新增" icon="pi pi-plus" severity="success" onClick={openNew} />
-        <Button label="删除" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+        <Link href={`/expenseBill/create`}>
+          <Button className='bg-white text-lg	p-4 text-green-400 border-1 border-green-400'>
+            <Plus /> 新建
+          </Button>
+        </Link>
+        <Button className='bg-white text-lg	p-4 text-red-400 border-1 border-red-400'
+          disabled={!selectedProducts || !selectedProducts.length}
+          onClick={ConfirmDeleteSelected}
+        >
+          <Trash2 className='pr-1' /> 删除
+        </Button>
       </div>
     );
   };
@@ -201,37 +211,60 @@ export default function ProjectCostTable(props) {
     return (
       <div className="flex ml-4 flex-wrap gap-5">
         {/* <Button label="导出" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} /> */}
-        <Button label="审批记录" icon="pi pi-file" className="p-button-list" />
+        {/* <Button label="审批记录" icon="pi pi-file" className="p-button-list" /> */}
       </div>
     )
   };
 
   const header = (
-
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
       <h4 className="text-size">搜索</h4>
       <span className="p-input-icon-left">
-        <i className="pi pi-search" />
-        <InputText className='w-full' type="search" placeholder="Search..." onInput={(e) => { const target = e.target as HTMLInputElement; setGlobalFilter(target.value); }} />
+        <Search strokeWidth={1.25} className='pb-1' />
+        <InputText className='w-full' type="search" placeholder="搜索..." onInput={(e) => { const target = e.target as HTMLInputElement; setGlobalFilter(target.value); }} />
       </span>
     </div>
   );
   const productDialogFooter = (
     <React.Fragment>
-      <Button label="取消" icon="pi pi-times" outlined onClick={hideDialog} />
-      <Button label="保存" icon="pi pi-check" onClick={saveProduct} />
+      <Button className='bg-white text-lg	p-4 text-green-400 border-1 border-green-400'
+        onClick={hideDialog}
+      >
+        <X /> 取消
+      </Button>
+      <Button className='bg-white text-lg	p-4 text-red-400 border-1 border-red-400'
+        onClick={saveProduct}
+      >
+        <Check className='pr-1' /> 保存
+      </Button>
     </React.Fragment>
   );
   const deleteProductDialogFooter = (
     <React.Fragment>
-      <Button label="否" icon="pi pi-times" outlined onClick={hideDeleteProductDialog} />
-      <Button label="是" icon="pi pi-check" severity="danger" onClick={deleteProduct} />
+      <Button className='bg-white text-lg	p-3 text-red-400 border-1 border-red-400'
+        onClick={hideDeleteProductDialog}
+      >
+        <X /> 否
+      </Button>
+      <Button className='bg-white text-lg	p-3 text-green-400 border-1 border-green-400'
+        onClick={deleteProduct}
+      >
+        <Check className='pr-1' /> 是
+      </Button>
     </React.Fragment>
   );
   const deleteProductsDialogFooter = (
     <React.Fragment>
-      <Button label="否" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
-      <Button label="是" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
+      <Button className='bg-white text-lg	p-3 text-red-400 border-1 border-red-400'
+        onClick={hideDeleteProductsDialog}
+      >
+        <X /> 否
+      </Button>
+      <Button className='bg-white text-lg	p-3 text-green-400 border-1 border-green-400'
+        onClick={deleteSelectedProducts}
+      >
+        <Check className='pr-1' /> 是
+      </Button>
     </React.Fragment>
   );
 
@@ -244,7 +277,7 @@ export default function ProjectCostTable(props) {
           <DataTable
             showGridlines
             columnResizeMode='fit'
-            className='h-screen overflow-scroll p-datatable-header	p-datatable-footer'
+            className='h-screen overflow-scroll p-datatable-header	p-datatable-footer bg-white'
             ref={dt} value={products} selection={selectedProducts}
             onSelectionChange={(e) => {
               if (Array.isArray(e.value)) {
@@ -331,8 +364,8 @@ export default function ProjectCostTable(props) {
         </div>
       </Dialog>
 
-      <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-        <div className="confirmation-content">
+      <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="确认" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+        <div className="确认ation-content">
           <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
           {product && (
             <span>
@@ -343,9 +376,9 @@ export default function ProjectCostTable(props) {
       </Dialog>
 
       <Dialog
-        visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
-        <div className="confirmation-content">
-          <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+        visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="确认" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
+        <div className="confirmation-content flex items-center">
+          <AlertTriangle strokeWidth={1.25} className='mr-2' />
           {product && <span>确定要删除所有选中项吗?</span>}
         </div>
       </Dialog>

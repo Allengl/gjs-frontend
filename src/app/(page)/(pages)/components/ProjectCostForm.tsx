@@ -23,7 +23,7 @@ import { Toast } from 'primereact/toast'
 import { Tooltip } from 'primereact/tooltip'
 import { Tag } from 'primereact/tag'
 import { ProgressBar } from 'primereact/progressbar'
-import { LayoutList, TextSelect } from 'lucide-react'
+import { LayoutList, Plus, TextSelect, Trash2 } from 'lucide-react'
 import { DialogComponent } from "./DialogComponent";
 import { Card } from "@/components/ui/card";
 import { Label } from "@radix-ui/react-label";
@@ -512,8 +512,13 @@ const ProjectCostForm = () => {
               </div>
             </Panel>
             <div className="flex ml-4 justify-space gap-5">
-              <Button label="同意" icon="pi pi-check" severity="success" />
-              <Button label="驳回" icon="pi pi-times" severity="danger" />
+              <Button className='bg-white text-lg	p-2 px-3 text-green-400 border-1 border-green-400'>
+                <Plus /> 同意
+              </Button>
+              <Button className='bg-white text-lg	p-2 px-3 text-red-400 border-1 border-red-400'
+              >
+                <Trash2 className='pr-1' /> 驳回
+              </Button>
             </div>
           </div >
         </form>
