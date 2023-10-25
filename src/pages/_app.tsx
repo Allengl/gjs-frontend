@@ -3,6 +3,10 @@ import type { AppProps } from 'next/app'
 import PagesLayout from '@/layouts/PagesLayout';
 import SignInPage from './sign-in';
 import SignUpPage from './sign-up';
+import { RouterProvider  } from 'react-router-dom';
+import { router } from '@/router/routes'
+
+
 
 export default function App({ Component, pageProps }: AppProps) {
   if (Component === SignInPage || Component === SignUpPage) {
@@ -11,9 +15,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <PagesLayout>
-      <Component {...pageProps} />
-    </PagesLayout>
+      <PagesLayout>
+            <RouterProvider router={router} />
+        <Component {...pageProps} />
+      </PagesLayout>
   );
 }
 
