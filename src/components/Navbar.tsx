@@ -44,6 +44,7 @@ export const NavButton: FC<NavButtonProps> = ({ title, customFunc, icon, color, 
   // </TooltipProvider>
 );
 
+
 const Navbar = () => {
   const { activeMenu, setActiveMenu, handleClick, isClicked, screenSize, setScreenSize } = useStateContext();
 

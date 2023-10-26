@@ -31,7 +31,7 @@ interface Product {
   objdesc: string;
 }
 
-export default function ProjectCostTable(props) {
+export default function ProjectCostTable() {
   let emptyProduct: Product = {
     id: null,
     feetype: '',
@@ -45,7 +45,7 @@ export default function ProjectCostTable(props) {
   const [deleteProductsDialog, setDeleteProductsDialog] = useState<boolean>(false);
   const [product, setProduct] = useState<Product>(emptyProduct);
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product>(emptyProduct);
+  const [selectedProduct, setSelectedProduct] = useState<Product>(null as any);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [globalFilter, setGlobalFilter] = useState<string>('');
   const toast = useRef<Toast>(null);
@@ -53,97 +53,20 @@ export default function ProjectCostTable(props) {
   const router = useRouter();
 
   useEffect(() => {
-    ProjectFeeService.getProducts().then((data) => setProducts(data));
+    ProjectFeeService.getProducts().then((data: any) => setProducts(data));
   }, []);
-
-  const formatCurrency = (value: number) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-  };
-
-  // const openNew = () => {
-  //   setProduct(emptyProduct);
-  //   setSubmitted(false);
-  //   setProductDialog(true);
-  // };
-
-  const hideDialog = () => {
-    setSubmitted(false);
-    setProductDialog(false);
-  };
 
   const hideDeleteProductDialog = () => {
     setDeleteProductDialog(false);
   };
 
-  const hideDeleteProductsDialog = () => {
-    setDeleteProductsDialog(false);
-  };
-
-  const saveProduct = () => {
-    setSubmitted(true);
-
-    if (product.name.trim()) {
-      let _products = [...products];
-      let _product = { ...product };
-
-      if (product.id) {
-        const index = findIndexById(product.id);
-
-        _products[index] = _product;
-        toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-      } else {
-        _product.id = createId();
-        _products.push(_product);
-        toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-      }
-
-      setProducts(_products);
-      setProductDialog(false);
-      setProduct(emptyProduct);
-    }
-  };
-
-  const editProduct = (product: Product) => {
-    setProduct({ ...product });
-    setProductDialog(true);
-  };
-
-  const 确认DeleteProduct = (product: Product) => {
-    setProduct(product);
-    setDeleteProductDialog(true);
-  };
-
   const deleteProduct = () => {
-    let _products = products.filter((val) => val.id !== product.id);
-
+    const selectedProductId = selectedProduct.id;
+    let _products = products.filter((val) => val.id !== selectedProductId);
     setProducts(_products);
     setDeleteProductDialog(false);
     setProduct(emptyProduct);
-    toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-  };
-
-  const findIndexById = (id: string) => {
-    let index = -1;
-
-    for (let i = 0; i < products.length; i++) {
-      if (products[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  };
-
-  const createId = (): string => {
-    let id = '';
-    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-
-    return id;
+    toast.current?.show({ severity: 'success', summary: '成功', detail: '删除成功!', life: 3000 });
   };
 
   const exportCSV = () => {
@@ -151,48 +74,17 @@ export default function ProjectCostTable(props) {
   };
 
   const ConfirmDeleteSelected = () => {
-    setDeleteProductsDialog(true);
-  };
-
-  const deleteSelectedProducts = () => {
-    let _products = products.filter((val) => !selectedProducts.includes(val));
-
-    setProducts(_products);
-    setDeleteProductsDialog(false);
-    setSelectedProducts([]);
-    toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-  };
-
-
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
-    const val = (e.target && e.target.value) || '';
-    let _product = { ...product };
-
-    // @ts-ignore
-    _product[`${name}`] = val;
-
-    setProduct(_product);
-  };
-
-  const onInputNumberChange = (e: InputNumberChangeEvent, name: string) => {
-    const val = e.value || 0;
-    let _product = { ...product };
-
-    // @ts-ignore
-    _product[`${name}`] = val;
-
-    setProduct(_product);
+    setDeleteProductDialog(true);
   };
 
   const leftToolbarTemplate = () => {
     return (
       <div className="flex ml-4 flex-wrap gap-5">
-        <Link href={`/expense-bill/create`}>
-          <Button className='bg-white text-lg	p-4 text-green-400 border-1 border-green-400'>
+        <Button className='bg-white text-lg	p-4 text-green-400 border-1 border-green-400'>
+          <Link href={`/expense-bill/create`} className='flex items-center'>
             <Plus /> 新建
-          </Button>
-        </Link>
+          </Link>
+        </Button>
         <Button className='bg-white text-lg	p-4 text-red-400 border-1 border-red-400'
           disabled={!selectedProduct}
           onClick={ConfirmDeleteSelected}
@@ -206,26 +98,21 @@ export default function ProjectCostTable(props) {
   const rightToolbarTemplate = () => {
     return (
       <div className="flex ml-4 flex-wrap gap-5">
-        {/* <Button label="导出" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} /> */}
-        {/* <Button label="审批记录" icon="pi pi-file" className="p-button-list" /> */}
-        <div className="flex ml-4 flex-wrap gap-5">
-          <Link href={`/expense-bill/edit`}>
-            <Button className='bg-white text-lg	p-4 text-blue-400 border-1 border-blue-400'
-              disabled={!selectedProduct}
-            >
-              <FileEdit className='pr-1' /> 编辑
-            </Button>
+        <Button className='bg-white text-lg	p-4 text-blue-400 border-1 border-blue-400'
+          disabled={!selectedProduct}
+        >
+          <Link href={`/expense-bill/edit`} className='flex items-center'>
+            <FileEdit className='pr-1' /> 编辑
           </Link>
-          <Link href={`/epproval-records`}>
-            <Button className='bg-white text-lg	p-4 text-purple-600 border-1 border-purple-600'
-              disabled={!selectedProduct}
-              onClick={ConfirmDeleteSelected}
-            >
-              <FileText className='pr-1' /> 审批记录
-            </Button>
+        </Button>
+        <Button className='bg-white text-lg	p-4 text-purple-600 border-1 border-purple-600'
+          disabled={!selectedProduct}
+        >
+          <Link href={`/approval-records`} className='flex items-center'>
+            <FileText className='pr-1' /> 审批记录
           </Link>
 
-        </div>
+        </Button>
       </div>
     )
   };
@@ -253,21 +140,6 @@ export default function ProjectCostTable(props) {
       </Button>
     </React.Fragment>
   );
-  const deleteProductsDialogFooter = (
-    <React.Fragment>
-      <Button className='bg-white text-lg	p-3 text-red-400 border-1 border-red-400'
-        onClick={hideDeleteProductsDialog}
-      >
-        <X /> 否
-      </Button>
-      <Button className='bg-white text-lg	p-3 text-green-400 border-1 border-green-400'
-        onClick={deleteSelectedProducts}
-      >
-        <Check className='pr-1' /> 是
-      </Button>
-    </React.Fragment>
-  );
-
   return (
     <Card className='w-full'>
       <Card title="项目费用单" className='grid grid-cols-1 md:flex flex-row'>
@@ -285,6 +157,9 @@ export default function ProjectCostTable(props) {
               //   setSelectedProducts(e.value);
               // }
               setSelectedProduct(e.value)
+              console.log(e.value);
+
+
             }}
             editMode="row"
             dataKey="id" paginator rows={10}
@@ -309,21 +184,13 @@ export default function ProjectCostTable(props) {
       </Card>
 
       <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="确认" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-        <div className="确认ation-content">
-          <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-          {product && (
-            <span>
-              Are you sure you want to delete <b>{product.id}</b>?
-            </span>
-          )}
-        </div>
-      </Dialog>
-
-      <Dialog
-        visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="确认" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
         <div className="confirmation-content flex items-center">
           <AlertTriangle strokeWidth={1.25} className='mr-2' />
-          {product && <span>确定要删除所有选中项吗?</span>}
+          {product && (
+            <span>
+              确定要删除选中项 <b>{product.id}</b>吗?
+            </span>
+          )}
         </div>
       </Dialog>
     </Card>

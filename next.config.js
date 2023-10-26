@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  assetPrefix: 'http://localhost:3000/',
+  assetPrefix: 'http://localhost:3000',
   distDir: 'dists',
   images: {
     unoptimized: true
@@ -24,7 +24,7 @@ const nextConfig = {
       '/sign-up': { page: '/sign-up' },
       '/expense-bill': { page: '/expense-bill' },
       '/expense-bill/create': { page: '/expense-bill/create' },
-      '/expenseBill/edit': { page: '/expenseBill/edit' },
+      '/expense-bill/edit': { page: '/expense-bill/edit' },
       '/approval-records': { page: '/approval-records' },
     }
   }, 

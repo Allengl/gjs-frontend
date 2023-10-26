@@ -1,10 +1,13 @@
 'use client'
 import React from 'react'
-import ProjectCostFrom from '@/components/form/ProjectCostForm'
+import ExpenseBillForm from '@/components/form/ExpenseBillForm'
+import { Card } from 'primereact/card'
 
 const ExpenseBillCreatePage = () => {
   return (
-    <ProjectCostFrom />
+    <Card title="新建项目费用单" className='w-full p-6'>
+      <ExpenseBillForm type="new" />
+    </Card>
   )
 }
 
