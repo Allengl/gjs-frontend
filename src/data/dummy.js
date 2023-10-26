@@ -10,7 +10,7 @@ import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
 import { GiLouvrePyramid } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
-import { ScrollText } from 'lucide-react';
+import { Bell, BellRing, FileCheck, FileEdit, Home, ScrollText } from 'lucide-react';
 import avatar from './avatar.jpg';
 import avatar2 from './avatar2.jpg';
 import avatar3 from './avatar3.png';
@@ -471,22 +471,23 @@ export const employeesGrid = [
 ];
 
 export const links = [
-  // {
-  //   title: 'Dashboard',
-  //   links: [
-  //     {
-  //       name: 'home',
-  //       icon: <FiShoppingBag />,
-  //     },
-  //   ],
-  // },
+  {
+    title: 'Home',
+    links: [
+      {
+        name: 'home',
+        description: '主页',
+        icon: <Home size={20}/>,
+      },
+    ],
+  },
   {
     title: 'Pages',
     links: [
       {
         name: 'expense-bill',
         description: '项目费用单',
-        icon: <ScrollText size={16} />,
+        icon: <ScrollText size={20} />,
       },
       // {
       //   name: 'epprovalRecords',
@@ -499,27 +500,31 @@ export const links = [
       // },
     ],
   },
-  // {
-  //   title: 'Apps',
-  //   links: [
-  //     {
-  //       name: 'calendar',
-  //       icon: <AiOutlineCalendar />,
-  //     },
-  //     {
-  //       name: 'kanban',
-  //       icon: <BsKanban />,
-  //     },
-  //     {
-  //       name: 'editor',
-  //       icon: <FiEdit />,
-  //     },
-  //     {
-  //       name: 'color-picker',
-  //       icon: <BiColorFill />,
-  //     },
-  //   ],
-  // },
+  {
+    title: 'Tasks',
+    links: [
+      {
+        name: 'to-do',
+        description: '待办任务',
+        icon: <FileEdit size={20}/>,
+      },
+      {
+        name: 'to-be-read',
+        description: '待阅任务',
+        icon: <BellRing size={20}/>,
+      },
+      {
+        name: 'tasks-down',
+        description: '已办任务',
+        icon: <FileCheck size={20}/>,
+      },
+      {
+        name: 'tasks-read',
+        description: '已阅任务',
+        icon: <Bell size={20}/>,
+      },
+    ],
+  },
   // {
   //   title: 'Charts',
   //   links: [
