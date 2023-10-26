@@ -20,7 +20,6 @@ const nextConfig = {
     { dev, dir, outDir, distDir, buildId }
   ) {
     return {
-      '/': { page: '/sign-in' },
       '/sign-in': { page: '/sign-in' },
       '/sign-up': { page: '/sign-up' },
       '/expense-bill': { page: '/expense-bill' },
